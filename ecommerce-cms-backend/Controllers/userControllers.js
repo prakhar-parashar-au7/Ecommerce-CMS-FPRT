@@ -7,16 +7,66 @@ const userControllers = {
   
     signUpUser : async (req,res) => {
         const user = req.body
-       bcrypt.hash(user.Password, 2, function (err, hashedPassword) {
+        const saltRounds = 2
+       bcrypt.hash(user.Password, saltRounds, function (err, hashedPassword) {
+           
            user.Password = hashedPassword
+           if(req.body.type == "User"){
+            User.create(user).then(function(user,err) {
+                if(err) {
+                    res.json ({
+                        status : 404,
+                        message: "can't create"
+                    })
+                }
+                res.json({
+                    status : 202,
+                    message : "User created"
+                })
+            })
+
+           }
+           if(req.body.type == "Vendor"){
+            Vendor.create(user).then(function(user,err) {
+                if(err) {
+                    res.json ({
+                        status : 404,
+                        message: "can't create"
+                    })
+                }
+                res.json({
+                    status : 202,
+                    message : "created"
+                })
+            })
+
+           }
+           if(req.body.type == "Admin"){
+            Admin.create(user).then(function(user,err) {
+                if(err) {
+                    res.json ({
+                        status : 404,
+                        message: "can't create"
+                    })
+                }
+                res.json({
+                    status : 202,
+                    message : "User created"
+                })
+            })
+
+           }
+           
+           
+           
        })
-       const userCreated = await User.create(user)
+       
     },
 
     signInUser : async (req,res) => {
-        if(req.body.Type == "Admin") {
+        if(req.body.type == "Admin") {
 
-            Admin.find({Name : req.body.Name}, (err, user) => {
+            Admin.find({Name : req.body.Name}, (user, err) => {
                 if (err) {
                     res.json({message : "User not found"})
                 }
@@ -51,8 +101,8 @@ const userControllers = {
 
         }
 
-        if(req.body.Type == "Vendor"){
-
+        if(req.body.type == "Vendor"){
+           console.log("hi")
             Vendor.find({Name : req.body.Name}, (err, user) => {
                 if (err) {
                     res.json({message : "User not found"})
@@ -86,7 +136,7 @@ const userControllers = {
 
         }
         
-        if(req.body.Type == "User") {
+        if(req.body.type == "User") {
             console.log(req.body)
             User.find({Name : req.body.Name}, (err, user) => {
                 if (err) {

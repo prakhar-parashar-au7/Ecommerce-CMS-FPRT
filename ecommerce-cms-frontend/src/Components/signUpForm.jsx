@@ -61,11 +61,11 @@ class SignUpForm extends React.Component {
               Email : this.state.Email,
               Password : this.state.Password,
               photoId : this.state.photoId,
-              Type : this.state.Type,
+              type : this.props.type || "User",
               Bio : this.state.Bio
             }
           }).then((response) => {
-           
+           console.log(response)
           })
         }
     
@@ -80,7 +80,12 @@ class SignUpForm extends React.Component {
             <div id="form">
                 <div style={{margin : "10px"}}>
                 <br></br>
-                <h3 style={{marginLeft : "200px"}}>Sign Up</h3>
+                {
+                (this.props.heading) ? 
+                <h3 style={{marginLeft : "200px"}}>{this.props.heading}</h3> : <h3 style={{marginLeft : "200px"}}>Sign Up</h3>
+                }
+                
+        
                 <TextField label="Name" variant="outlined" onChange={this.handleNameChange} />
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <TextField id="Email" label="Email" variant="outlined" onChange={this.handleEmailChange} />
@@ -88,19 +93,7 @@ class SignUpForm extends React.Component {
                 <br></br><br></br>
                 <TextField id="Password" label="Password" variant="outlined" onChange={this.handlePasswordChange} />
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <InputLabel id="demo-customized-select-label" style={{ display: "inline" }}>Type</InputLabel>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <Select
-                    labelId="demo-customized-select-label"
-                    id="demo-customized-select"
-                    value={this.state.type}
-                    onChange={this.handleTypeChange}
-
-                >
-                    <MenuItem value="Admin">Admin</MenuItem>
-                    <MenuItem value="Vendor">Vendor</MenuItem>
-                    <MenuItem value="User">User</MenuItem>
-                </Select>
+                
                 <hr></hr>
                 <br></br><br></br>
                 <div style= {{display : "grid", gridTemplateColumns : "auto auto"}}>

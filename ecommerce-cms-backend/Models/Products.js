@@ -10,7 +10,7 @@ const productSchema = new schema ({
         required : true
     },
      
-    Pic :{
+    photoId :{
         type : String
     },
     
@@ -31,13 +31,11 @@ const productSchema = new schema ({
     },
 
     Brand : {
-        type : schema.Types.ObjectId,
-        ref : 'Brand'
+        type : String
     },
     
     Category : {
-        type : schema.Types.ObjectId,
-        ref : 'Category'
+        type : String
     },
 
     Status : {

@@ -10,7 +10,7 @@ const brandSchema = new schema ({
         required : true
     },
      
-    Pic :{
+    photoId :{
         type : String
     },
 

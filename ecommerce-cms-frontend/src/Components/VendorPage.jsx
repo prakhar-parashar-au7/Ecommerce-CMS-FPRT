@@ -12,9 +12,7 @@ class AdminPage extends React.Component {
    constructor(props) {
        super(props)
 
-       this.state = {
-            userModalShow: false
-    }
+       
 
    }
    
@@ -29,27 +27,19 @@ class AdminPage extends React.Component {
     
     return(
         <div>
-        <div id="users">
-            <h1>Users</h1>
-          <Link to='/addUser'><Button variant="contained" color="primary" >Add More</Button></Link>  
-          
-        </div>
+        
        
-        <div id="vendors">
-            <h1>vendors</h1>
-            <Link to='/addVendor'><Button variant="contained" color="primary" >Add More</Button></Link> 
-
-        </div>
+       
 
         <div id="Brands">
             <h1>Brands</h1>
-            <Link to='/addBrand'><Button variant="contained" color="primary" >Add More</Button></Link>
+           
 
         </div>
 
         <div id="Categories">
             <h1>Category</h1>
-            <Link to='/addCategory'><Button variant="contained" color="primary" >Add More</Button></Link>
+            
 
         </div>
 
