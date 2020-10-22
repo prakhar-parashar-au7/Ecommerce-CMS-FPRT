@@ -11,25 +11,28 @@ const Products = (props) =>  {
     
          const [offset, setOffset] = React.useState(0)
           const [data, setData]=  React.useState([])
-          const [perPage, setPerPage ]= React.useState(12)
+          const [perPage, setPerPage ]= React.useState(9)
           const [currentPage, setCurrentPage] =  React.useState(0)
          const [pageCount, setPageCount] = React.useState(0)
         const [postData, setPostData] = React.useState([])
 
-       const Products = useSelector ( state => state.products)
+        const Products = useSelector ( state => state.products)
 
-
+   
 
   const recievedData = () => {
+    
        if (Products) {
-
-    const slice = Products.slice(this.state.offset, this.state.offset + this.state.perPage)
-    const postData = slice.map(product => <React.Fragment>
-        <p>{product.Name}</p>
+        console.log("hey")
+    const slice = Products.slice(offset, offset + perPage)
+    console.log(slice)
+    const postData = slice.map(product => <div >
+        
         <Image publicId={product.photoId} cloudName="prakhar-parashar" width="150" height="150"/>
-    </React.Fragment>)
+        <p>{product.Name}</p>
+    </div>)
 
-setPageCount(Math.ceil(this.Products.length / this.state.perPage))
+setPageCount(Math.ceil(Products.length / perPage))
 setPostData(postData)
 }
   } 
@@ -37,19 +40,24 @@ setPostData(postData)
 
 
   const  handlePageClick = (e) => {
+      console.log("hi")
     const selectedPage = e.selected;
     const offset = selectedPage * perPage;
 
     setCurrentPage(selectedPage)
    setOffset(offset)
-  recievedData()
+    recievedData()
    
 
 };
 
  React.useEffect(() => {
+     
+        console.log(Products)
+     
+  
      recievedData()
- }, [])
+ }, [Products])
    
 
     
@@ -57,8 +65,9 @@ setPostData(postData)
      
   
       return (
-          <div>
-              {postData}
+          <div style={{display : "grid"}}>
+              {(postData) ? <div style={{display : "grid", gridTemplateColumns : "auto auto auto"}}> {postData}  </div>: null}
+              <br></br>
               <ReactPaginate
                   previousLabel={"prev"}
                   nextLabel={"next"}
@@ -71,6 +80,7 @@ setPostData(postData)
                   containerClassName={"pagination"}
                   subContainerClassName={"pages pagination"}
                   activeClassName={"active"}/>
+                  
           </div>
 
       )
