@@ -4,6 +4,7 @@ import bcrypt from 'bcrypt'
 import Brand from '../Models/Brands.js'
 import Category from '../Models/Categories.js'
 import Product from '../Models/Products.js'
+import Vendor from '../Models/Vendor.js'
 const adminControllers = {
   
     signUpAdmin : async (req,res) => {
@@ -122,6 +123,26 @@ const adminControllers = {
      })
  })
 
+},
+
+getEverything : (req, res) => {
+    User.find().then(function(users, err) {
+       Vendor.find().then(function(vendors, err){
+           Brand.find().then(function(brands, err){
+               Category.find().then(function(categories, err){
+                   Product.find().then(function(products, err){
+                       res.json({
+                           users : users,
+                           vendors : vendors,
+                           brands : brands,
+                           categories, categories,
+                           products : products
+                       })
+                   })
+               })
+           })
+       })
+    })
 }
   
 

@@ -16,7 +16,7 @@ const vendorSchema = new schema ({
         required : true
     },
      
-    Pic :{
+    photoId :{
         type : String
     },
 

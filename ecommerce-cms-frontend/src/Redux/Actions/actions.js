@@ -4,7 +4,7 @@ export const getEverythingAction = () => {
     return async (dispatch) => {
         const {data} = await axios({
             method : "get",
-            url : "getEverything"
+            url : "/getEverything"
         })
         console.log(data)
         return dispatch(storeEverythingInRedux(data))
