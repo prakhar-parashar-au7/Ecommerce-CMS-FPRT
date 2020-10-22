@@ -9,14 +9,15 @@ import {Image} from 'cloudinary-react'
 import Button from '@material-ui/core/Button'
 import axios from 'axios'
 import {useHistory} from 'react-router-dom'
-
+import {useDispatch} from 'react-redux'
+import {saveUserInfo} from '../Redux/Actions/actions.js'
 
 
 
 const LoginForm = () => {
 
    const history = useHistory()
-   
+   const dispatch = useDispatch()
 
         
         const   [Name, setName]  = React.useState("")
@@ -52,12 +53,22 @@ const LoginForm = () => {
               Type : Type        
             }
           }).then((response) => {
+              console.log(response)
           if(response.data.status ===  404) {
             alert(response.data.message)
           }
 
-          if(response.data.status === 202) {
-                  history.push('/k')
+          if(response.data.user) {
+                  dispatch(saveUserInfo(response.data.user))
+                  if(Type == "Admin") {
+                      history.push('/adminPage')
+                  }
+                  else if(Type == "Vendor") {
+                    history.push('/VendorPage')
+                }
+                else {
+                    history.push('/userHomePage')
+                }
           }
            
           })

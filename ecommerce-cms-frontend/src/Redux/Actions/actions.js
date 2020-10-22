@@ -12,9 +12,17 @@ export const getEverythingAction = () => {
 }
 
 export const storeEverythingInRedux = (data) => {
-    console.log(data)
     return {
         type : "STORE_EVERYTHING",
+        payload : data
+    }
+}
+
+
+
+export const saveUserInfo = (data) => {
+    return {
+        type : "USER_INFO",
         payload : data
     }
 }

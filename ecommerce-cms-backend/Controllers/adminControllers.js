@@ -109,19 +109,44 @@ const adminControllers = {
    
 
  addProduct : (req, res) => {
-    console.log(req.body)
-    Product.create(req.body).then(function(product, err) {
-     if(err) {
-         res.json ({
-             status : 404,
-             message: "can't create"
-         })
-     }
-     res.json({
-         status : 202,
-         message : " created"
-     })
- })
+    if(req.body.Seller.Type == "Admin"){
+        req.body.AddedByAdmin= true
+        req.body.Seller = null
+        Product.create(req.body).then(function(product, err) {
+            console.log("there")
+            if(err) {
+                res.json ({
+                    status : 404,
+                    message: "can't create"
+                })
+            }
+            res.json({
+                status : 202,
+                message : " created"
+            })
+        })
+
+    }
+    
+    else{
+        req.body.Seller = req.body.Seller._id
+        Product.create(req.body).then(function(product, err) {
+            console.log("here")
+            if(err) {
+                res.json ({
+                    status : 404,
+                    message: "can't create"
+                })
+            }
+            res.json({
+                status : 202,
+                message : " created"
+            })
+        })
+
+    }
+
+    
 
 },
 

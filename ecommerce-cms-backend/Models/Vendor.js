@@ -28,7 +28,8 @@ const vendorSchema = new schema ({
     },
 
     Type : {
-        type : String
+        type : String,
+        default : "Vendor"
     },
 
     LastLogin : {

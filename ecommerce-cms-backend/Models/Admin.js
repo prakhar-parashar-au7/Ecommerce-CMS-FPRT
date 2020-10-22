@@ -28,7 +28,8 @@ const adminSchema = new schema ({
     },
 
     Type : {
-        type : String
+        type : String,
+        default : "Admin"
     },
 
     LastLogin : {

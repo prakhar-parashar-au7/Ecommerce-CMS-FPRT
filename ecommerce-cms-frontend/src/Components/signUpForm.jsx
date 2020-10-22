@@ -1,14 +1,13 @@
 import * as React from 'react';
 import './styles/signUpForm.css'
 import TextField from '@material-ui/core/TextField'
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem'
-import InputLabel from '@material-ui/core/InputLabel'
 import PhotoUploader from './photoUploader'
 import {Image} from 'cloudinary-react'
 import Button from '@material-ui/core/Button'
 import axios from 'axios'
-
+import {connect} from 'react-redux'
+import {saveUserInfo} from '../Redux/Actions/actions.js'
+import { withRouter } from 'react-router-dom';
 
 
 
@@ -61,11 +60,16 @@ class SignUpForm extends React.Component {
               Email : this.state.Email,
               Password : this.state.Password,
               photoId : this.state.photoId,
-              type : this.props.type || "User",
               Bio : this.state.Bio
             }
           }).then((response) => {
-           console.log(response)
+            if(response.data.user) {
+                this.props.saveUserInfo(response.data.user)
+                const history = this.props.history
+                if(history) {
+                    history.push('/userHomePage')
+                }
+            }
           })
         }
     
@@ -96,6 +100,8 @@ class SignUpForm extends React.Component {
                 
                 <hr></hr>
                 <br></br><br></br>
+
+
                 <div style= {{display : "grid", gridTemplateColumns : "auto auto"}}>
 
                 {(this.state.photoId == "")
@@ -120,6 +126,9 @@ class SignUpForm extends React.Component {
     }
 }
 
- 
+const mapDispatch = {
+    saveUserInfo : saveUserInfo
+}  
 
-export default SignUpForm
+
+export default   connect(null, mapDispatch) (SignUpForm)

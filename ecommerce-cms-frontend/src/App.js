@@ -8,7 +8,8 @@ import AddVendor from './Components/addVendor.jsx'
 import AddBrand from './Components/addBrand.jsx'
 import AddCategory from './Components/addCategory.jsx'
 import AddProduct from './Components/addProducts.jsx'
-
+import VendorPage from './Components/VendorPage.jsx';
+import userHomePage from './Components/userHomePage.jsx'
 
 function App() {
 
@@ -25,6 +26,8 @@ function App() {
         <Route exact path="/addBrand" component = {AddBrand} />
         <Route exact path="/addCategory" component = {AddCategory} />
         <Route exact path="/addProduct" component = {AddProduct} />
+        <Route exact path="/VendorPage" component = {VendorPage}/>
+        <Route exact path="/userHomePage" component = {userHomePage}/>
         
     
     </Router>

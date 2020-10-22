@@ -7,9 +7,13 @@ const allReducer = (state = initialState, action) => {
         console.log("reducer")
         const everything = action.payload
 
-        return {...everything}
+        return {...state, ...everything}
     
+        case("USER_INFO"):
+        console.log("I'm here")
+        const currentUser = action.payload
 
+        return {...state, currentUser}
     default :
     return state
     }

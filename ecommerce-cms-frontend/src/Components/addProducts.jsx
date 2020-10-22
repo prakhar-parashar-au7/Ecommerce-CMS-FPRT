@@ -8,7 +8,8 @@ import PhotoUploader from './photoUploader'
 import {Image} from 'cloudinary-react'
 import Button from '@material-ui/core/Button'
 import axios from 'axios'
-
+import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 
 
@@ -23,6 +24,8 @@ const AddProducts = (props)=> {
            const [Brand , setBrand] = useState("")
            const [Category,  setCategory ] = useState("")
 
+           const currentUser = useSelector(state => state.currentUser)
+           const history = useHistory()
         
     
 
@@ -52,6 +55,7 @@ const AddProducts = (props)=> {
   
 
   const handleClick = () => {
+     
         axios({
             method : 'post',
             url : '/addProduct',
@@ -60,11 +64,17 @@ const AddProducts = (props)=> {
                 Name : Name,
                 Price : Price,
                 Quantity : Quantity,
-               // User : User,
+                Seller : currentUser,
                 Brand : Brand,
                 Category : Category
             }
           }).then((response) => {
+                if(currentUser.Type == "Admin"){
+                    history.push("/AdminPage")
+                }
+                else {
+                    history.push("/VendorPage")
+                }
            
           })
         }

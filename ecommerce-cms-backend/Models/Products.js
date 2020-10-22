@@ -6,7 +6,6 @@ const productSchema = new schema ({
 
     Name : {
         type : String,
-        unique : true,
         required : true
     },
      
@@ -25,11 +24,14 @@ const productSchema = new schema ({
     Quantity : {
         type : Number
     },
-    User : {
+    Seller : {
         type : schema.Types.ObjectId,
-        ref : 'User'
+        ref : 'Vendor'
     },
-
+    AddedByAdmin : {
+        type : Boolean,
+        default : false
+    },
     Brand : {
         type : String
     },
