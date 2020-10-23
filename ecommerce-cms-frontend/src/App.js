@@ -10,8 +10,22 @@ import AddCategory from './Components/addCategory.jsx'
 import AddProduct from './Components/addProducts.jsx'
 import VendorPage from './Components/VendorPage.jsx';
 import userHomePage from './Components/userHomePage.jsx'
+import { useDispatch } from 'react-redux';
+import jwt from 'jsonwebtoken'
+import { saveUserInfo } from './Redux/Actions/actions';
+
+
 
 function App() {
+
+  const dispatch = useDispatch()
+  if(localStorage.getItem("token")){ 
+  const token = localStorage.getItem("token")
+  const user = jwt.verify(token, 'secret')
+  console.log(user)
+  dispatch(saveUserInfo(user))
+  }
+  
 
 
   return (

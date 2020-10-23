@@ -1,9 +1,14 @@
 import React, {Component} from 'react'
 import ReactPaginate from 'react-paginate';
 import './styles/productStyles.css'
-import {connect} from 'react-redux'
 import { Image } from 'cloudinary-react';
 import {useSelector} from 'react-redux'
+import ProductModal from './ProductModal'
+
+
+
+
+
 
 
 const Products = (props) =>  {
@@ -15,8 +20,10 @@ const Products = (props) =>  {
           const [currentPage, setCurrentPage] =  React.useState(0)
          const [pageCount, setPageCount] = React.useState(0)
         const [postData, setPostData] = React.useState([])
-
+        const [modalShow, setModalShow] = React.useState(false);
+        const [currentProduct, setCurrentProduct] = React.useState({})
         const Products = useSelector ( state => state.products)
+
 
    
 
@@ -25,11 +32,12 @@ const Products = (props) =>  {
        if (Products) {
         console.log("hey")
     const slice = Products.slice(offset, offset + perPage)
-    console.log(slice)
-    const postData = slice.map(product => <div >
-        
+    const postData = slice.map(product => <div key = {product._id} onClick={() => {handleProductClicked(product._id)}} style={{ cursor : "pointer"}}>
         <Image publicId={product.photoId} cloudName="prakhar-parashar" width="150" height="150"/>
         <p>{product.Name}</p>
+
+
+
     </div>)
 
 setPageCount(Math.ceil(Products.length / perPage))
@@ -40,22 +48,27 @@ setPostData(postData)
 
 
   const  handlePageClick = (e) => {
-      console.log("hi")
     const selectedPage = e.selected;
     const offset = selectedPage * perPage;
 
-    setCurrentPage(selectedPage)
+  setCurrentPage(selectedPage)
    setOffset(offset)
     recievedData()
    
 
 };
 
+
+   const handleProductClicked = (product) => {
+     setModalShow(true)
+     console.log(product)
+     console.log(Products)
+     const currentProduct = Products.filter(pro => pro._id == product)
+     console.log(currentProduct)
+     setCurrentProduct(currentProduct[0])
+   }
+
  React.useEffect(() => {
-     
-        console.log(Products)
-     
-  
      recievedData()
  }, [Products])
    
@@ -66,7 +79,14 @@ setPostData(postData)
   
       return (
           <div style={{display : "grid"}}>
-              {(postData) ? <div style={{display : "grid", gridTemplateColumns : "auto auto auto"}}> {postData}  </div>: null}
+            
+
+
+      <ProductModal currentProduct = {currentProduct}
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+      />
+              {(postData) ? <div  style={{display : "grid", gridTemplateColumns : "auto auto auto"}}> {postData}  </div>: null}
               <br></br>
               <ReactPaginate
                   previousLabel={"prev"}

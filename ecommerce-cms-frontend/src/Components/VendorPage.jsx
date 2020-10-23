@@ -1,13 +1,13 @@
 import React from 'react'
 import Button from '@material-ui/core/Button'
 import { connect } from 'react-redux'
-import { getEverythingAction } from '../Redux/Actions/actions'
+import { getVendorData } from '../Redux/Actions/actions'
 import Slider from 'react-slick'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Link } from 'react-router-dom';
 import Card from './Card'
-import UserCard from './userCard'
+import Navbar from './Navbar'
 import Products from './Products'
 import { Image } from 'cloudinary-react';
 
@@ -19,7 +19,7 @@ class VendorPage extends React.Component {
 
 
     componentDidMount() {
-        this.props.getEverythingAction()
+        this.props.getVendorData(this.props.currentUser._id)
     }
 
     render() {
@@ -36,6 +36,7 @@ class VendorPage extends React.Component {
 
         return (
             <div>
+                <Navbar thisIs = "Vendor" currentUser = {this.props.currentUser}/>
                 <div id="brands" style={{ textAlign: "center", textDecoration: "none" }}>
                     <h3 >New Brands Launched</h3>
                     {this.props.brands ?
@@ -55,7 +56,7 @@ class VendorPage extends React.Component {
 
                     <div >
                         <div id="Products" style={{ textAlign: "center" }}>
-                            <h2>New Products</h2>
+                            <h2>Products added by you</h2>
                             <br></br><br></br>
                             <Products />
                             <br></br>
@@ -109,13 +110,14 @@ class VendorPage extends React.Component {
 const mapState = (state) => {
     return {
         brands: state.brands,
-        categories: state.categories
+        categories: state.categories,
+        currentUser : state.currentUser
 
     }
 }
 
 const mapDispatch = {
-    getEverythingAction: getEverythingAction
+    getVendorData: getVendorData
 }
 
 export default connect(mapState, mapDispatch)(VendorPage)

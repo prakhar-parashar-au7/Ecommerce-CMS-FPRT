@@ -2,10 +2,9 @@ import express from 'express'
 import vendorControllers from '../Controllers/vendorControllers.js'
 const Router = express()
 
-const { addVendor, signInVendor } = vendorControllers
+const { addVendor, getVendorData} = vendorControllers
 
 Router.post('/addVendor', addVendor)
-
-Router.post('./signInVendor', signInVendor)
+Router.post('/getVendorData', getVendorData)
 
 export default Router

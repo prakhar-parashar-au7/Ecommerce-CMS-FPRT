@@ -11,6 +11,23 @@ export const getEverythingAction = () => {
     }
 }
 
+export const getVendorData = (vendorId) => {
+    return async (dispatch) => {
+        const {data} = await axios({
+            method : "post",
+            url : "/getVendorData",
+            data : {
+                vendorId : vendorId
+            }
+        })
+        console.log(data)
+        return dispatch(storeEverythingInRedux(data))
+    }
+}
+
+
+
+
 export const storeEverythingInRedux = (data) => {
     return {
         type : "STORE_EVERYTHING",

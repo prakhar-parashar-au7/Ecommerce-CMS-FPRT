@@ -16,7 +16,7 @@ const adminSchema = new schema ({
         required : true
     },
      
-    Pic :{
+    photoId :{
         type : String
     },
 

@@ -11,12 +11,14 @@ import Card from './Card'
 import UserCard from './userCard'
 import Products from './Products'
 import { Image } from 'cloudinary-react';
-
+import Navbar from './Navbar'
 
 
 
 class AdminPage extends React.Component {
-
+    
+     
+     
 
 
     componentDidMount() {
@@ -36,6 +38,7 @@ class AdminPage extends React.Component {
 
         return (
             <div>
+                <Navbar currentUser = {this.props.currentUser} thisIs = "Admin"/>
                 <div id="brands" style={{ textAlign: "center", textDecoration: "none" }}>
                     <h3 >New Brands Launched</h3>
                     {this.props.brands ?
@@ -131,7 +134,8 @@ const mapState = (state) => {
         brands: state.brands,
         vendors: state.vendors,
         users: state.users,
-        categories: state.categories
+        categories: state.categories,
+        currentUser : state.currentUser
 
     }
 }

@@ -8,7 +8,7 @@ import PhotoUploader from './photoUploader'
 import {Image} from 'cloudinary-react'
 import Button from '@material-ui/core/Button'
 import axios from 'axios'
-import {useHistory} from 'react-router-dom'
+import {Link, useHistory} from 'react-router-dom'
 import {useDispatch} from 'react-redux'
 import {saveUserInfo} from '../Redux/Actions/actions.js'
 
@@ -60,6 +60,7 @@ const LoginForm = () => {
 
           if(response.data.user) {
                   dispatch(saveUserInfo(response.data.user))
+                  localStorage.setItem("token", response.data.token)
                   if(Type == "Admin") {
                       history.push('/adminPage')
                   }
@@ -80,6 +81,7 @@ const LoginForm = () => {
 
 
         return (
+            <div style = {{display : "grid", gridTemplateColumns : "auto auto"}}>
             <div id="loginform">
                 <div style={{ marginBottom : "50px"}}>
                 <br></br>
@@ -105,9 +107,54 @@ const LoginForm = () => {
                <br></br><br></br>
                 
                 < Button color="primary" variant="contained" onClick={handleClick}>Submit</Button>
+                      <br></br><br></br>
+                <Link to = "/signUp">New User ? SignUp here</Link>
                 </div>
               
+          </div>
+          <div style={{marginTop : "60px"}}>
+              <h3>Only for demo purpose:</h3>
+                 <h5>If you're a user:</h5> 
+                   <p> Login using your Name and Password
+                       <br></br>
+                           or 
+                        <br></br>
+                Sign up as a new user
+                     <br></br>
+                           or 
+                        <br></br>
+                        Login using:
+                        <br></br> 
+                            Name : Raj
+                            <br></br> 
+                            Password: raj
+                            </p>  
 
+                   <h5> If you're a vendor:</h5>
+
+                      <p> Login using your Name and Password
+                            <br></br>
+                             or
+                             <br></br>
+                       Ask admin to add your account 
+                       <br></br>
+                             or
+                             <br></br>
+                        Login using:
+                        <br></br> 
+                            Name : shubhra
+                            <br></br> 
+                            Password: shubhra
+                            </p>     
+
+                   <h5> If you're an admin:</h5>
+                    <p>  Login using :
+                        <br></br> 
+                       Name : Shikhar
+                       <br></br>
+                       Password : admin    <p/>
+                    </p>
+           </div>
             </div>
 
         )

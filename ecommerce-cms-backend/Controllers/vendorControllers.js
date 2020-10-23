@@ -1,5 +1,8 @@
 import Vendor from '../Models/Vendor.js'
 import bcrypt from 'bcrypt'
+import Brand from '../Models/Brands.js'
+import Category from '../Models/Categories.js'
+import Product from '../Models/Products.js'
 
 const vendorControllers = {
   
@@ -11,37 +14,27 @@ const vendorControllers = {
        const vendorCreated = await Vendor.create(user)
     },
 
-    signInVendor : async (req,res) => {
-        Vendor.find({Name : req.body.Name}, (err, vendor) => {
-            if (err) {
-                res.json({message : "Vendor not found"})
-            }
+  
 
-            if(!vendor) {
-                res.json({message : "Vendor not found"})
+     getVendorData : (req, res) => {
+                    console.log(req.body)
+                   Brand.find().then(function(brands, err){
+                       Category.find().then(function(categories, err){
+                           Product.find({Seller : req.body.vendorId}).then(function(products, err){
+                               res.json({
+                            
+                                   brands : brands,
+                                   categories, categories,
+                                   products : products
 
-            }
-
-            else {
-                bcrypt.compare(req.body.Password, vendor.Password, (err, result) => {
-                    if(err) {
-                        res.json ({message : "password don't match"})
-                    }
-                    else if (result == true) {
-                        res.json ({
-                            message : "Login Successful",
-                            Vendor : vendor
-                        })
-                    }
-
-                    else {
-                        res.json ({message : "password don't match"})
-                    }
-                })
-            }
-
-        })
-    },
+                               })
+                           })
+                       })
+                   })
+               
+            
+        
+     }
 
     
    

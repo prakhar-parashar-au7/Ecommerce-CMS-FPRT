@@ -155,14 +155,21 @@ getEverything : (req, res) => {
        Vendor.find().then(function(vendors, err){
            Brand.find().then(function(brands, err){
                Category.find().then(function(categories, err){
-                   Product.find().then(function(products, err){
+                   Product.find().
+                   populate('Seller')
+                   .exec(function (err, products){
+                       console.log(products)
+                       if (err) {console.log(err)}
                        res.json({
-                           users : users,
-                           vendors : vendors,
-                           brands : brands,
-                           categories, categories,
-                           products : products
-                       })
+                        users : users,
+                        vendors : vendors,
+                        brands : brands,
+                        categories, categories,
+                        products : products
+                    })
+
+                   
+                      
                    })
                })
            })

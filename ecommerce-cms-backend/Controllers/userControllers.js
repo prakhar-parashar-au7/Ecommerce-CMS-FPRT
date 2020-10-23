@@ -2,6 +2,8 @@ import User from '../Models/User.js'
 import bcrypt from 'bcrypt'
 import Vendor from '../Models/Vendor.js'
 import Admin from '../Models/Admin.js'
+import jwt from 'jsonwebtoken'
+
 
 const userControllers = {
   
@@ -49,13 +51,16 @@ const userControllers = {
                     
                     if(req.body.Password == user[0].Password) {
                       
+                        const token = jwt.sign({ _id: user[0]._id, Name: user[0].Name, photoId: user[0].photoId, Type:user[0].Type}, 'secret', (err, token) => {
+                      
                             res.json({
                                 status : 202,
                                 message : "Login Successful",
-                                user : user[0]
+                                user : user[0],
+                                token : token
                             })
-                        }
-    
+                        })
+                    }
                         else {
                             res.json ({message : "password don't match"})
                         }
@@ -63,14 +68,15 @@ const userControllers = {
                 }
     
             })
-
+        
         }
+       
 
         if(req.body.Type == "Vendor"){
           
             Vendor.find({Name : req.body.Name}, (err, user) => {
-                console.log(err)
-                console.log(user)
+
+                
                 if (err) {
                     
                   
@@ -84,18 +90,22 @@ const userControllers = {
                 }
     
                 else {
-                    console.log(req.body,"a", user)
+                    
                     bcrypt.compare(req.body.Password, user[0].Password, (err, result) => {
                         if(err) {
                             
                             res.json ({message : "password don't match"})
                         }
                         else if (result == true) {
-                            
-                            res.json ({
-                                status : 202,
-                                message : "Login Successful",
-                                user : user[0]
+
+                            const token = jwt.sign({ _id: user[0]._id, Name: user[0].Name, photoId: user[0].photoId, Type:user[0].Type}, 'secret', (err, token) => {
+                      
+                                res.json({
+                                    status : 202,
+                                    message : "Login Successful",
+                                    user : user[0],
+                                    token : token
+                                })
                             })
                         }
     
@@ -123,16 +133,22 @@ const userControllers = {
     
                 else {
                     bcrypt.compare(req.body.Password, user[0].Password, (err, result) => {
+                        
                         if(err) {
                             res.json ({message : "password don't match"})
                         }
                         else if (result == true) {
-                        
-                            res.json ({
-                                status : 202,
-                                message : "Login Successful",
-                                user : user[0]
+                            const token = jwt.sign({ _id: user[0]._id, Name: user[0].Name, photoId: user[0].photoId}, 'secret', (err, token) => {
+                      
+                                res.json({
+                                    status : 202,
+                                    message : "Login Successful",
+                                    user : user[0],
+                                    token : token
+                                })
                             })
+                        
+                        
                         }
     
                         else {

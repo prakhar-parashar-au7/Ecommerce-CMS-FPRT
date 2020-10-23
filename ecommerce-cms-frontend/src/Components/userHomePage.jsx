@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { getEverythingAction } from '../Redux/Actions/actions'
 import { Link } from 'react-router-dom';
 import Products from './Products'
-
+import Navbar from './Navbar'
 
 
 
@@ -21,9 +21,9 @@ class VendorPage extends React.Component {
 
 
         return (
-           
+              <div>
 
-                   
+                   <Navbar thisIs="Let's buy stuff" currentUser= {this.props.currentUser}/>
 
 
 
@@ -36,6 +36,7 @@ class VendorPage extends React.Component {
                           
 
                         </div>
+                        </div>
 
 
 
@@ -46,10 +47,14 @@ class VendorPage extends React.Component {
     }
 }
 
-
+const mapState = (state) => {
+    return {
+      currentUser : state.currentUser
+    }
+}
 
 const mapDispatch = {
     getEverythingAction: getEverythingAction
 }
 
-export default connect(null, mapDispatch)(VendorPage)
+export default connect(mapState, mapDispatch)(VendorPage)
